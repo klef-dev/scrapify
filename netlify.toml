@@ -1,0 +1,9 @@
+[build]
+  publish = "client/build/"
+  command = "npm run build:client"
+[context.production.environment]
+  NODE_ENV = "production"
+[[redirects]]
+  from = "/*"
+  to = "/"
+  status = 200
