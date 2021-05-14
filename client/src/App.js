@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 // Views
 import Home from "./views/Home";
 import Login from "./views/auth/Login";
+import Register from "./views/auth/Register";
 
 const App = () => {
 	return (
@@ -14,6 +15,9 @@ const App = () => {
 					</Route>
 					<Route path="/login" exact>
 						<Login />
+					</Route>
+					<Route path="/register" exact>
+						<Register />
 					</Route>
 				</Switch>
 			</BrowserRouter>

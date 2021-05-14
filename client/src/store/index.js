@@ -10,6 +10,11 @@ export default createStore(
 			actions.setToken(data.token);
 			return data;
 		}),
+		register: thunk(async (actions, payload) => {
+			const { data } = await axios.post("/auth/register", payload);
+			actions.setToken(data.token);
+			return data;
+		}),
 		getContents: thunk(async (actions, payload, { getState }) => {
 			const { token } = getState();
 			const { data } = await axios.get("/scrap", {
