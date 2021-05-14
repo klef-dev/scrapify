@@ -25,7 +25,7 @@ export class Routes {
 			this.authController.register
 		);
 
-		this.router.get("/scrap", this.economistController.index);
+		this.router.get("/scrap", isLoggedIn, this.economistController.index);
 
 		return this.router;
 	}

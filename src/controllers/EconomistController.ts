@@ -3,24 +3,16 @@ import puppeteer from "puppeteer";
 
 export class EconomistController {
 	public index = async (req: Request, res: Response): Promise<object> => {
+		const { url } = req.query;
 		try {
-			const URL = "https://www.economist.com";
+			const URL = url
+				? `https://www.economist.com/${url}`
+				: "https://www.economist.com";
 			let json_data = await this.sendRequest(URL);
-			if (json_data && JSON.parse(json_data)) {
-				json_data = JSON.parse(json_data);
-				return res.json({ data: json_data.props.pageProps.sections });
-			} else return res.send({ data: json_data });
-		} catch (error) {
-			return res.json({ error: "Something wrong happened" });
-		}
-	};
-
-	public show = async (req: Request, res: Response): Promise<object> => {
-		const { url } = req.body.params;
-		try {
-			const json_data = await this.sendRequest(url);
-
-			return res.send(json_data);
+			json_data = JSON.parse(json_data);
+			if (url) {
+				return res.json({ data: json_data.props.pageProps.content });
+			} else return res.send({ data: json_data.props.pageProps.sections });
 		} catch (error) {
 			return res.json({ error: "Something wrong happened" });
 		}
