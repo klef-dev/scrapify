@@ -1,10 +1,6 @@
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { useEffect, useState } from "react";
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(" ");
-}
 
 const Home = () => {
 	const [loading, setLoading] = useState(false);
@@ -13,6 +9,10 @@ const Home = () => {
 	const contents = useStoreState((state) => state.contents);
 
 	const getContents = useStoreActions((actions) => actions.getContents);
+
+	const getUrlPath = (url) => {
+		return url.split("https://www.economist.com/").join("");
+	};
 
 	useEffect(() => {
 		const fetchContents = async () => {
@@ -64,11 +64,14 @@ const Home = () => {
 				{!loading && !error && (
 					<div>
 						{contents.length &&
-							contents.map((content) => (
-								<div className="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
-									{content.articles.map((article, i) => (
+							contents.map((content, i) => (
+								<div
+									className="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none"
+									key={i}
+								>
+									{content.articles.map((article, j) => (
 										<div
-											key={i}
+											key={j}
 											className="flex flex-col rounded-lg shadow-lg overflow-hidden"
 										>
 											<div className="flex-shrink-0">
@@ -88,11 +91,14 @@ const Home = () => {
 															{content.title.text}
 														</a>
 													</p>
-													<a href={article.url} className="block mt-2">
+													<Link
+														to={getUrlPath(article.url)}
+														className="block mt-2"
+													>
 														<p className="text-xl font-semibold text-gray-900">
 															{article.headline}
 														</p>
-													</a>
+													</Link>
 												</div>
 											</div>
 										</div>
