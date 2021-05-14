@@ -11,7 +11,7 @@ const Home = () => {
 	const getContents = useStoreActions((actions) => actions.getContents);
 
 	const getUrlPath = (url) => {
-		return url.split("https://www.economist.com/").join("");
+		return url.split("https://www.economist.com/").join("").split("/").join("%2f");
 	};
 
 	useEffect(() => {
@@ -92,7 +92,7 @@ const Home = () => {
 														</a>
 													</p>
 													<Link
-														to={getUrlPath(article.url)}
+														to={`article/${getUrlPath(article.url)}`}
 														className="block mt-2"
 													>
 														<p className="text-xl font-semibold text-gray-900">

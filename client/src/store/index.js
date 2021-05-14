@@ -5,6 +5,7 @@ export default createStore(
 	persist({
 		token: null,
 		contents: [],
+		content: {},
 		login: thunk(async (actions, payload) => {
 			const { data } = await axios.post("/auth/login", payload);
 			actions.setToken(data.token);
@@ -23,11 +24,22 @@ export default createStore(
 			actions.setContents(data.data);
 			return data;
 		}),
+		singleContent: thunk(async (actions, url, { getState }) => {
+			const { token } = getState();
+			const { data } = await axios.get(`/scrap?url=${url}`, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+			actions.setSingleContent(data.data);
+			return data;
+		}),
 		setToken: action((state, token) => {
 			state.token = token;
 		}),
 		setContents: action((state, payload) => {
 			state.contents = payload;
+		}),
+		setSingleContent: action((state, payload) => {
+			state.content = payload;
 		}),
 	})
 );

@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./views/Home";
 import Login from "./views/auth/Login";
 import Register from "./views/auth/Register";
+import Content from "./views/Content";
 
 const App = () => {
 	return (
@@ -18,6 +19,9 @@ const App = () => {
 					</Route>
 					<Route path="/register" exact>
 						<Register />
+					</Route>
+					<Route path="/article/:url" exact>
+						<Content />
 					</Route>
 				</Switch>
 			</BrowserRouter>
