@@ -5,8 +5,8 @@ export default createStore(
 	persist({
 		api_uri:
 			process.env.NODE_ENV === "development"
-				? "http://localhost:3333/api/vq"
-				: "https://scrapify-api.herokuapp.com/api/v1",
+				? "http://localhost:3333/api/v1"
+				: "https://7777887fc098.ngrok.io/api/v1",
 		token: null,
 		contents: [],
 		content: {},
