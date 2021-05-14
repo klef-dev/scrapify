@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useStoreActions } from "easy-peasy";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 const Register = () => {
@@ -54,12 +54,12 @@ const Register = () => {
 				</h2>
 				<p className="mt-2 text-center text-sm text-gray-600">
 					Or{" "}
-					<a
-						href="#"
+					<Link
+						to="/login"
 						className="font-medium text-indigo-600 hover:text-indigo-500"
 					>
 						sign in to your account
-					</a>
+					</Link>
 				</p>
 			</div>
 
