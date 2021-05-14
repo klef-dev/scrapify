@@ -13,18 +13,18 @@ export class EconomistController {
 			if (url) {
 				return res
 					.json({ data: json_data.props.pageProps.content })
-					.sendStatus(200);
+					.status(200);
 			} else
 				return res
 					.send({ data: json_data.props.pageProps.sections })
-					.sendStatus(200);
+					.status(200);
 		} catch (error) {
-			return res.json({ error: "Something wrong happened" }).sendStatus(400);
+			return res.json({ error: "Something wrong happened" }).status(400);
 		}
 	};
 
 	private sendRequest = async (url: string) => {
-		const browser = await puppeteer.launch();
+		const browser = await puppeteer.launch({ headless: false });
 		const page = await browser.newPage();
 
 		await page.goto(url);

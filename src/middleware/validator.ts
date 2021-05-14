@@ -56,7 +56,7 @@ const loginRequest = (): ValidationChain[] => {
 			.exists()
 			.not()
 			.isEmpty(),
-		body("password")
+		body("password", "Password is required")
 			.isLength({ min: 8 })
 			.not()
 			.isEmpty()
