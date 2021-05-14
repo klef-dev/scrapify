@@ -1,4 +1,4 @@
-import { NextFunction, Request, response, Response } from "express";
+import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -10,10 +10,12 @@ export class AuthController {
 	public register = async (req: Request, res: Response) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			return res.status(422).json({ errors: errors.array() });
+			return res
+				.status(422)
+				.json({ errors: errors.array({ onlyFirstError: true }) });
 		}
 
-		let { email, password } = req.body;
+		let { password } = req.body;
 		let hashPassword = await bcrypt.hash(password, 10);
 		req.body.password = hashPassword;
 
@@ -47,10 +49,12 @@ export class AuthController {
 		}
 	};
 
-	public login = async (req: Request, res: Response, next: NextFunction) => {
+	public login = async (req: Request, res: Response) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			return res.status(422).json({ errors: errors.array() });
+			return res
+				.status(422)
+				.json({ errors: errors.array({ onlyFirstError: true }) });
 		}
 		const logInData: LogInDto = req.body;
 		const user = await User.findOne({ email: logInData.email }).select(
