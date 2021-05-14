@@ -1,17 +1,22 @@
-import axios from "axios";
 import { useEffect } from "react";
-function App() {
-	useEffect(() => {
-		axios
-			.get("/scrap")
-			.then(({ data }) => console.log(data))
-			.catch((err) => console.log(err));
-	}, []);
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import axios from "axios";
+
+// Views
+import Home from "./views/Home";
+
+const App = () => {
 	return (
 		<div className="App">
-			<h1>Mistho Frontend</h1>
+			<BrowserRouter>
+				<Switch>
+					<Route path="/">
+						<Home />
+					</Route>
+				</Switch>
+			</BrowserRouter>
 		</div>
 	);
-}
+};
 
 export default App;
