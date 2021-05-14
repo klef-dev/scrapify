@@ -12,19 +12,21 @@ export class EconomistController {
 			json_data = JSON.parse(json_data);
 			if (url) {
 				return res
-					.json({ data: json_data.props.pageProps.content })
-					.status(200);
+					.status(200)
+					.json({ data: json_data.props.pageProps.content });
 			} else
 				return res
-					.send({ data: json_data.props.pageProps.sections })
-					.status(200);
+					.status(200)
+					.json({ data: json_data.props.pageProps.sections });
 		} catch (error) {
-			return res.json({ error: "Something wrong happened" }).status(400);
+			return res.status(400).json({ error: "Something wrong happened" });
 		}
 	};
 
 	private sendRequest = async (url: string) => {
-		const browser = await puppeteer.launch({ headless: false });
+		const browser = await puppeteer.launch({
+			args: ["--no-sandbox", "--disable-setuid-sandbox"],
+		});
 		const page = await browser.newPage();
 
 		await page.goto(url);
