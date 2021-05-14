@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import axios from "axios";
 
 // Views
 import Home from "./views/Home";
