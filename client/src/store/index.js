@@ -3,30 +3,36 @@ import { createStore, thunk, action, persist } from "easy-peasy";
 
 export default createStore(
 	persist({
+		api_uri:
+			process.env.NODE_ENV === "development"
+				? "http://localhost:3333/api/vq"
+				: "https://scrapify-api.herokuapp.com/api/v1",
 		token: null,
 		contents: [],
 		content: {},
-		login: thunk(async (actions, payload) => {
-			const { data } = await axios.post("/auth/login", payload);
+		login: thunk(async (actions, payload, { getState }) => {
+			const { api_uri } = getState();
+			const { data } = await axios.post(`${api_uri}/auth/login`, payload);
 			actions.setToken(data.token);
 			return data;
 		}),
-		register: thunk(async (actions, payload) => {
-			const { data } = await axios.post("/auth/register", payload);
+		register: thunk(async (actions, payload, { getState }) => {
+			const { api_uri } = getState();
+			const { data } = await axios.post(`${api_uri}/auth/register`, payload);
 			actions.setToken(data.token);
 			return data;
 		}),
 		getContents: thunk(async (actions, payload, { getState }) => {
-			const { token } = getState();
-			const { data } = await axios.get("/scrap", {
+			const { token, api_uri } = getState();
+			const { data } = await axios.get(`${api_uri}/scrap`, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
 			actions.setContents(data.data);
 			return data;
 		}),
 		singleContent: thunk(async (actions, url, { getState }) => {
-			const { token } = getState();
-			const { data } = await axios.get(`/scrap?url=${url}`, {
+			const { token, api_uri } = getState();
+			const { data } = await axios.get(`${api_uri}/scrap?url=${url}`, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
 			actions.setSingleContent(data.data);
