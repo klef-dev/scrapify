@@ -6,7 +6,7 @@ export default createStore(
 		api_uri:
 			process.env.NODE_ENV === "development"
 				? "http://localhost:3333/api/v1"
-				: "https://7777887fc098.ngrok.io/api/v1",
+				: "https://10e6e69e00f7.ngrok.io/api/v1",
 		token: null,
 		contents: [],
 		content: {},

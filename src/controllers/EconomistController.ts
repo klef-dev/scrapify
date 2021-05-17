@@ -24,11 +24,7 @@ export class EconomistController {
 	};
 
 	private sendRequest = async (url: string) => {
-		const browser = await puppeteer.launch({
-			headless: true,
-			defaultViewport: null,
-			args: ["--incognito", "--no-sandbox", "--single-process", "--no-zygote"],
-		});
+		const browser = await puppeteer.launch();
 		const page = await browser.newPage();
 
 		await page.goto(url);
